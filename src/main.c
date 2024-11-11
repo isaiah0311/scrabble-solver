@@ -21,7 +21,7 @@ extern size_t word_count;
  * \return Exit code.
  */
 int main() {
-    printf("Enter your letters: ");
+    printf("Enter your letters (? for blanks): ");
 
     char input[16] = { 0 };
 
@@ -31,7 +31,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    char letters[26] = { 0 };
+    unsigned letters[27] = { 0 };
 
     for (int i = 0; i < 15; ++i) {
         const char letter = input[i];
@@ -42,6 +42,8 @@ int main() {
             ++letters[letter - 'A'];
         } else if (letter >= 'a' && letter <= 'z') {
             ++letters[letter - 'a'];
+        } else if (letter == '?') {
+            ++letters[26];
         } else {
             fprintf(stderr, "[WARN] Skipping invalid letter: \'%c\'.\n",
                 letter);
@@ -53,7 +55,7 @@ int main() {
         const char* word = dictionary[i];
         const size_t char_count = strlen(word);
 
-        char frequency[26] = { 0 };
+        unsigned frequency[26] = { 0 };
         bool invalid_word = false;
 
         for (size_t j = 0; j < char_count; ++j) {
@@ -73,11 +75,16 @@ int main() {
         }
 
         bool can_make_word = true;
+        unsigned blanks = letters[26];
 
         for (int j = 0; j < 26; ++j) {
             if (letters[j] < frequency[j]) {
-                can_make_word = false;
-                break;
+                if (blanks >= frequency[j] - letters[j]) {
+                    blanks -= frequency[j] - letters[j];
+                } else {
+                    can_make_word = false;
+                    break;
+                }
             }
         }
 
