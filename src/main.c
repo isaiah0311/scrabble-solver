@@ -5,6 +5,7 @@
  * Scrabble word finder.
  */
 
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,19 +22,23 @@ extern size_t word_count;
  * \return Exit code.
  */
 int main() {
+    // Get letters. ////////////////////////////////////////////////////////////
+
     printf("Enter your letters (? for blanks): ");
 
     char input[16] = { 0 };
 
-    int result = scanf("%15s", input);
-    if (result < 1) {
-        fprintf(stderr, "[ERROR] Unable to read letters.\n");
+    char* result = fgets(input, sizeof(input) - 1, stdin);
+    if (!result) {
+        fprintf(stderr, "[ERROR] Failed to read input.\n");
         return EXIT_FAILURE;
     }
 
+    input[strcspn(input, "\r\n")] = 0;
+
     unsigned letters[27] = { 0 };
 
-    for (int i = 0; i < 15; ++i) {
+    for (size_t i = 0; i < sizeof(input); ++i) {
         const char letter = input[i];
 
         if (letter == 0) {
@@ -51,9 +56,35 @@ int main() {
         }
     }
 
+    // Get what the word must start with. //////////////////////////////////////
+
+    printf("Needs to start with (Optional): ");
+
+    char starts_with[16] = { 0 };
+
+    result = fgets(starts_with, sizeof(starts_with), stdin);
+    if (!result) {
+        fprintf(stderr, "[ERROR] Failed to read input.\n");
+        return EXIT_FAILURE;
+    }
+
+    starts_with[strcspn(starts_with, "\r\n")] = 0;
+
+    for (size_t i = 0; i < sizeof(starts_with); ++i) {
+        if (starts_with[i] >= 'a' && starts_with[i] <= 'z') {
+            starts_with[i] = toupper(starts_with[i]);
+        }
+    }
+
+    // Search dictionary. //////////////////////////////////////////////////////
+
     for (size_t i = 0; i < word_count; ++i) {
         const char* word = dictionary[i];
         const size_t char_count = strlen(word);
+
+        if (strncmp(word, starts_with, strlen(starts_with))) {
+            continue;
+        }
 
         unsigned frequency[26] = { 0 };
         bool invalid_word = false;
