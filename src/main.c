@@ -10,19 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-// NOTE: Used for testing only.
-const char* dictionary[16] = {
-    "ONE",
-    "TWO",
-    "THREE",
-    "FOUR",
-    "FIVE",
-    "SIX",
-    "SEVEN",
-    "EIGHT",
-    "NINE",
-    "TEN"
-};
+extern const char* dictionary[178691];
+extern size_t word_count;
 
 /**
  * Entry point for the program. Takes in letters as input and checks against
@@ -54,12 +43,13 @@ int main() {
         } else if (letter >= 'a' && letter <= 'z') {
             ++letters[letter - 'a'];
         } else {
-            fprintf(stderr, "[ERROR] \'%c\' is not a valid letter.\n", letter);
-            return EXIT_FAILURE;
+            fprintf(stderr, "[WARN] Skipping invalid letter: \'%c\'.\n",
+                letter);
+            continue;
         }
     }
 
-    for (int i = 0; i < 10; ++i) {
+    for (size_t i = 0; i < word_count; ++i) {
         const char* word = dictionary[i];
         const size_t char_count = strlen(word);
 
@@ -72,7 +62,7 @@ int main() {
             } else if (word[j] >= 'a' && word[j] <= 'z') {
                 ++frequency[word[j] - 'a'];
             } else {
-                fprintf(stderr, "[ERROR] Skipping invalid word: %s.\n", word);
+                fprintf(stderr, "[WARN] Skipping invalid word: %s.\n", word);
                 invalid_word = true;
                 break;
             }
