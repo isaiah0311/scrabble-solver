@@ -96,6 +96,26 @@ int main() {
         }
     }
 
+    // Get substring the word must contain. ////////////////////////////////////
+
+    printf("Needs to contain substring (Optional): ");
+
+    char contains[16] = { 0 };
+
+    result = fgets(contains, sizeof(contains), stdin);
+    if (!result) {
+        fprintf(stderr, "[ERROR] Failed to read input.\n");
+        return EXIT_FAILURE;
+    }
+
+    contains[strcspn(contains, "\r\n")] = 0;
+
+    for (size_t i = 0; i < sizeof(contains); ++i) {
+        if (contains[i] >= 'a' && contains[i] <= 'z') {
+            contains[i] = toupper(contains[i]);
+        }
+    }
+
     // Search dictionary. //////////////////////////////////////////////////////
 
     for (size_t i = 0; i < word_count; ++i) {
@@ -108,6 +128,10 @@ int main() {
 
         if (char_count > strlen(ends_with) &&
             strcmp(word + char_count - strlen(ends_with), ends_with)) {
+            continue;
+        }
+
+        if (!strstr(word, contains)) {
             continue;
         }
 
