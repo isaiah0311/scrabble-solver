@@ -15,6 +15,27 @@ extern const char* dictionary[178691];
 extern size_t word_count;
 
 /**
+ * Gets the number of points a letter is worth.
+ * 
+ * \param[in] letter Letter to convert.
+ * \return Point value.
+ */
+unsigned letter_to_points(char letter) {
+    static unsigned points[26] = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1,
+        3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10 };
+    
+    if (letter >= 'A' && letter <= 'Z') {
+        return points[letter - 'A'];
+    } else if (letter >= 'a' && letter <= 'z') {
+        return points[letter - 'a'];
+    } else if (letter < 26) {
+        return points[(int) letter];
+    }
+
+    return 0;
+}
+
+/**
  * Entry point for the program. Takes in letters as input and checks against
  * words in the dictionary to determine which words can be made using the given
  * letters.
@@ -135,14 +156,19 @@ int main() {
             continue;
         }
 
+        unsigned points = 0;
         unsigned frequency[26] = { 0 };
         bool invalid_word = false;
 
         for (size_t j = 0; j < char_count; ++j) {
-            if (word[j] >= 'A' && word[j] <= 'Z') {
-                ++frequency[word[j] - 'A'];
-            } else if (word[j] >= 'a' && word[j] <= 'z') {
-                ++frequency[word[j] - 'a'];
+            const char letter = word[j];
+
+            points += letter_to_points(letter);
+
+            if (letter >= 'A' && letter <= 'Z') {
+                ++frequency[letter - 'A'];
+            } else if (letter >= 'a' && letter <= 'z') {
+                ++frequency[letter - 'a'];
             } else {
                 fprintf(stderr, "[WARN] Skipping invalid word: %s.\n", word);
                 invalid_word = true;
@@ -160,6 +186,7 @@ int main() {
         for (int j = 0; j < 26; ++j) {
             if (letters[j] < frequency[j]) {
                 if (blanks >= frequency[j] - letters[j]) {
+                    points -= letter_to_points(j);
                     blanks -= frequency[j] - letters[j];
                 } else {
                     can_make_word = false;
@@ -169,7 +196,7 @@ int main() {
         }
 
         if (can_make_word) {
-            printf("%s\n", word);
+            printf("%s (%d)\n", word, points);
         }
     }
 
