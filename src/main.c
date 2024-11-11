@@ -76,6 +76,26 @@ int main() {
         }
     }
 
+    // Get what the word must end with. ////////////////////////////////////////
+
+    printf("Needs to end with (Optional): ");
+
+    char ends_with[16] = { 0 };
+
+    result = fgets(ends_with, sizeof(ends_with), stdin);
+    if (!result) {
+        fprintf(stderr, "[ERROR] Failed to read input.\n");
+        return EXIT_FAILURE;
+    }
+
+    ends_with[strcspn(ends_with, "\r\n")] = 0;
+
+    for (size_t i = 0; i < sizeof(ends_with); ++i) {
+        if (ends_with[i] >= 'a' && ends_with[i] <= 'z') {
+            ends_with[i] = toupper(ends_with[i]);
+        }
+    }
+
     // Search dictionary. //////////////////////////////////////////////////////
 
     for (size_t i = 0; i < word_count; ++i) {
@@ -83,6 +103,11 @@ int main() {
         const size_t char_count = strlen(word);
 
         if (strncmp(word, starts_with, strlen(starts_with))) {
+            continue;
+        }
+
+        if (char_count > strlen(ends_with) &&
+            strcmp(word + char_count - strlen(ends_with), ends_with)) {
             continue;
         }
 
