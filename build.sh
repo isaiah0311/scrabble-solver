@@ -17,6 +17,6 @@ source_files=$(find . -type f -name "*.c")
 
 flags="-Wall -Werror -DNDEBUG -Isrc -o bin/scrabble_solver.exe"
 
-g++ $source_files $flags
+gcc $source_files $flags
 
 popd
