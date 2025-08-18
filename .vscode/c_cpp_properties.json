@@ -11,7 +11,7 @@
                 "_UNICODE"
             ],
             "intelliSenseMode": "windows-msvc-x64",
-            "cStandard": "c17"
+            "cStandard": "c11"
         },
         {
             "name": "Linux",
@@ -22,7 +22,7 @@
                 "NDEBUG"
             ],
             "intelliSenseMode": "linux-gcc-x64",
-            "cStandard": "c17"
+            "cStandard": "c11"
         }
     ],
     "version": 4,

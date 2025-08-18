@@ -6,55 +6,26 @@
 : 
 
 @echo off
-
 setlocal enabledelayedexpansion
 
-pushd "%programfiles%"
-
-for /r %%a in (*vcvarsall.bat) do (
-    set devcmd="%%a"
+for /f "usebackq delims=" %%i in (`powershell -NoProfile -ExecutionPolicy ^
+    Bypass -Command "$vs = Get-CimInstance -Namespace root/cimv2/vs " ^
+    "MSFT_VSInstance | Sort-Object InstallationVersion -Descending | " ^
+    "Select-Object -First 1; if ($vs) { $vs.InstallLocation } else { exit 1 }"`
+    ) do (
+    set "devcmd=%%i"
 )
 
-popd
-
-if not defined devcmd (
-    pushd "%programfiles(x86)%"
-
-    for /r %%a in (*vcvarsall.bat) do (
-        set devcmd="%%a"
-    )
-
-    popd
-)
-
-if not defined devcmd (
+set "devcmd=%devcmd%\Common7\Tools\VsDevCmd.bat"
+if not exist "%devcmd%" (
     echo [ERROR] Failed to find developer command prompt.
-    exit
+    exit /b 1
 )
 
-pushd "%~dp0"
-
-if not exist obj mkdir obj
-if not exist obj\%target% mkdir obj\%target%
-
-if not exist bin mkdir bin
-if not exist bin\%target% mkdir bin\%target%
-
-for /r %%a in (*.c) do (
-    if /i "%%~xa"==".c" (
-        set source_files=!source_files! %%a
-    )
+call "%devcmd%" > nul
+if errorlevel 1 (
+    echo [ERROR] Failed to initialize build environment.
+    exit /b 1
 )
 
-call set "source_files=%%source_files:%~dp0=%%"
-set source_files=!source_files:~1!
-
-set flags=/nologo /EHsc /fp:precise /sdl /GS /W3 /WX /MD
-set flags=%flags% /DNDEBUG /D_UNICODE /DUNICODE
-set flags=%flags% /Isrc /Foobj\ /Febin\scrabble_solver.exe
-
-call %devcmd% x64
-
-cl %source_files% %flags%
-
-popd
+msbuild scrabble_solver.vcxproj /p:Configuration=Release /p:Platform=x64

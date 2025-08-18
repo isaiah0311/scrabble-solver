@@ -93,7 +93,7 @@ int main() {
 
     for (size_t i = 0; i < sizeof(starts_with); ++i) {
         if (starts_with[i] >= 'a' && starts_with[i] <= 'z') {
-            starts_with[i] = toupper(starts_with[i]);
+            starts_with[i] = (char) toupper(starts_with[i]);
         }
     }
 
@@ -113,7 +113,7 @@ int main() {
 
     for (size_t i = 0; i < sizeof(ends_with); ++i) {
         if (ends_with[i] >= 'a' && ends_with[i] <= 'z') {
-            ends_with[i] = toupper(ends_with[i]);
+            ends_with[i] = (char) toupper(ends_with[i]);
         }
     }
 
@@ -133,7 +133,7 @@ int main() {
 
     for (size_t i = 0; i < sizeof(contains); ++i) {
         if (contains[i] >= 'a' && contains[i] <= 'z') {
-            contains[i] = toupper(contains[i]);
+            contains[i] = (char) toupper(contains[i]);
         }
     }
 
@@ -186,7 +186,7 @@ int main() {
         for (int j = 0; j < 26; ++j) {
             if (letters[j] < frequency[j]) {
                 if (blanks >= frequency[j] - letters[j]) {
-                    points -= letter_to_points(j);
+                    points -= letter_to_points((char) j);
                     blanks -= frequency[j] - letters[j];
                 } else {
                     can_make_word = false;

@@ -2,6 +2,13 @@
 
 Takes in letters and solves for what words can be made using them.
 
+## Structure
+
+.vscode - Settings and configuration files used by VSCode\
+bin - Executables\
+obj - Intermediate directory\
+src - Source files\
+
 ## Building
 
 Pressing ctrl + shift + b while in VSCode will pull up the build tasks. From
