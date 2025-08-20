@@ -30,7 +30,7 @@ $(OBJ_FILES): $(OBJ_DIR)/%.obj:
 		echo "[ERROR] Could not find source file for $@."; \
 		exit 1; \
 	fi
-	gcc -std=c11 -Wall -Werror -DNDEBUG -Isrc -Iinclude -c $(SRC_FILE) -o $@
+	gcc -std=c11 -Wall -Werror -DNDEBUG -Isrc -c $(SRC_FILE) -o $@
 
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)

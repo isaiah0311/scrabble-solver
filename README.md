@@ -7,7 +7,7 @@ Takes in letters and solves for what words can be made using them.
 .vscode - Settings and configuration files used by VSCode\
 bin - Executables\
 obj - Intermediate directory\
-src - Source files\
+src - Source files
 
 ## Building
 

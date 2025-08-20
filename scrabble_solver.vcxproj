@@ -30,7 +30,7 @@
     <PropertyGroup Label="UserMacros"/>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <ClCompile>
-            <AdditionalIncludeDirectories>src;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
             <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
             <BufferSecurityCheck>true</BufferSecurityCheck>
             <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
