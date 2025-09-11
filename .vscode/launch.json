@@ -28,7 +28,9 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/${input:configuration}/${input:platform}/scrabble-solver.exe",
-            "args": [],
+            "args": [
+                "res/dictionary.txt"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -40,7 +42,9 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/${input:configuration}/${input:platform}/scrabble-solver",
-            "args": [],
+            "args": [
+                "res/dictionary.txt"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

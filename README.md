@@ -5,12 +5,13 @@ A utility designed to help players in a game of Scrabble.
 ```text
 ├── .vscode                    <- Settings and configurations
 ├── bin                        <- Compiled binaries
-|   ├── debug                  <- Binaries compiled with debugging symbols
-|   |   ├── x64                <- 64-bit debug binaries
-|   |   └── x86                <- 32-bit debug binaries
-|   └── release                <- Binaries compiled with optimization
-|       ├── x64                <- 64-bit release binaries
-|       └── x86                <- 32-bit release binaries
+│   ├── debug                  <- Binaries compiled with debugging symbols
+│   │   ├── x64                <- 64-bit debug binaries
+│   │   └── x86                <- 32-bit debug binaries
+│   └── release                <- Binaries compiled with optimization
+│       ├── x64                <- 64-bit release binaries
+│       └── x86                <- 32-bit release binaries
+├── res                        <- Resource files
 ├── src                        <- Source files
 ├── .clang-format              <- Coding format file
 ├── .gitignore                 <- Repository ignores
@@ -57,9 +58,14 @@ Launch" to use GDB from the drop-down menu.
 5. Select a platform.
 ### Command Line
 1. Navigate to the root of the project.
-2. Run `bin\{ debug | release }\{ x86 | x64 }\scrabble-solver.exe` if you are on
-Windows or `./bin/{ debug | release }\{ x86 | x64 }/scrabble-solver` if you are
-on Linux.
+2. Run
+`bin\{ debug | release }\{ x86 | x64 }\scrabble-solver.exe dictionary-file` if
+you are on Windows or
+`./bin/{ debug | release }\{ x86 | x64 }/scrabble-solver dictionary-file` if you
+are on Linux.
+
+
+**Note:** A dictionary file has been provided in the resource folder.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
