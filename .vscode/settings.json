@@ -37,5 +37,10 @@
         "editor.wordWrapColumn": 80,
         "editor.wrappingIndent": "indent",
         "files.insertFinalNewline": true
+    },
+    "files.associations": {
+        "xutility": "c",
+        "type_traits": "c",
+        "xtr1common": "c"
     }
 }
