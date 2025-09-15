@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_CHAR_COUNT 17 // 15 letters + \r + \n = 17
+#define BUFFER_SIZE 256
 
 /**
  * Reads input and converts it into letter counts.
@@ -19,7 +19,7 @@
  * \return Whether input could be read
  */
 bool get_letters(int letters[27]) {
-    char input[MAX_CHAR_COUNT] = { 0 };
+    char input[BUFFER_SIZE] = { 0 };
     printf("Enter your letters: ");
     char* raw_input = fgets(input, sizeof(input) - 1, stdin);
     if (!raw_input) {
@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
     }
 
     int word_count = 0;
-    char word[MAX_CHAR_COUNT];
+    char word[BUFFER_SIZE];
 
     while (fgets(word, sizeof(word), dictionary)) {
         const size_t position = strcspn(word, "\r\n");
