@@ -10,8 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 15 letters + \r + \n = 17
-#define MAX_CHAR_COUNT 17
+#define MAX_CHAR_COUNT 17 // 15 letters + \r + \n = 17
 
 /**
  * Reads input and converts it into letter counts.
@@ -19,8 +18,8 @@
  * \param[out] letters Amount of each letter
  * \return Whether input could be read
  */
-bool get_letters(int letters[26]) {
-    char input[20] = { 0 };
+bool get_letters(int letters[27]) {
+    char input[MAX_CHAR_COUNT] = { 0 };
     printf("Enter your letters: ");
     char* raw_input = fgets(input, sizeof(input) - 1, stdin);
     if (!raw_input) {
@@ -37,6 +36,8 @@ bool get_letters(int letters[26]) {
             ++letters[letter - 'A'];
         } else if (letter >= 'a' && letter <= 'z') {
             ++letters[letter - 'a'];
+        } else if (letter == '?') {
+            ++letters[26];
         } else if (letter != '\0') {
             fprintf(stderr, "[WARN] Unrecognized character: %c\n", letter);
         }
@@ -52,7 +53,7 @@ bool get_letters(int letters[26]) {
  * \param[in] word Word
  * \return Whether the word can be made
  */
-bool can_make_word(int letters[26], const char* word) {
+bool can_make_word(int letters[27], const char* word) {
     bool result = true;
     int frequency[26] = { 0 };
     const size_t char_count = strlen(word);
@@ -68,10 +69,16 @@ bool can_make_word(int letters[26], const char* word) {
         }
     }
 
+    int blanks = letters[26];
+
     for (int j = 0; j < 26; ++j) {
         if (letters[j] < frequency[j]) {
-            result = false;
-            break;
+            if (blanks >= frequency[j] - letters[j]) {
+                blanks -= frequency[j] - letters[j];
+            } else {
+                result = false;
+                break;
+            }
         }
     }
 
@@ -101,6 +108,23 @@ int letter_to_points(char letter) {
 }
 
 /**
+ * Converts a word to its point value.
+ *
+ * \param[in] word Word
+ * \return Point value
+ */
+int word_to_points(const char* word) {
+    int value = 0;
+    const size_t char_count = strlen(word);
+
+    for (size_t i = 0; i < char_count; ++i) {
+        value += letter_to_points(word[i]);
+    }
+
+    return value;
+}
+
+/**
  * Gets input from the user, then checks it against each word in the dictionary
  * file to see if it can be made using the given letters. Prints every word that
  * can be made, along with the total point value of that word.
@@ -116,7 +140,7 @@ int main(int argc, char** argv) {
         fprintf(stderr, "[ERROR] Too many arguments were found.\n");
     }
 
-    int letters[26] = { 0 };
+    int letters[27] = { 0 };
     bool result = get_letters(letters);
     if (!result) {
         return EXIT_FAILURE;
@@ -143,14 +167,7 @@ int main(int argc, char** argv) {
 
         result = can_make_word(letters, word);
         if (result) {
-            const size_t char_count = strlen(word);
-
-            int points = 0;
-            for (size_t i = 0; i < char_count; ++i) {
-                points += letter_to_points(word[i]);
-            }
-
-            printf("%s (%d)\n", word, points);
+            printf("%s (%d)\n", word, word_to_points(word));
         }
     }
 

@@ -1,6 +1,10 @@
 # Scrabble Solver
 A utility designed to help players in a game of Scrabble.
 
+## Overview
+Input your Scrabble tiles to generate a list of possible words. Never lose a
+game of Scrabble again!
+
 ## Project Structure
 ```text
 ├── .vscode                    <- Settings and configurations
@@ -66,6 +70,12 @@ are on Linux.
 
 
 **Note:** A dictionary file has been provided in the resource folder.
+
+## How to Use
+The program will prompt you for your letter. Both uppercase and lowercase will
+be accepted. Non-letters will be ignored. Use '?' for blanks. The program will
+then spit out a list of words that can be made using the given letters along
+with their point values.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
