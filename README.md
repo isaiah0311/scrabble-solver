@@ -19,6 +19,7 @@ game of Scrabble again!
 ├── src                        <- Source files
 ├── .clang-format              <- Coding format file
 ├── .gitignore                 <- Repository ignores
+├── LICENSE                    <- License
 ├── Makefile                   <- Build instructions for make
 ├── README.md                  <- You are here
 └── scrabble-solver.vcxproj    <- Build instructions for msbuild
