@@ -27,7 +27,7 @@ bool get_letters(int letters[27]) {
         return false;
     }
 
-    input[strcspn(input, "\r\n")] = 0;
+    input[strcspn(input, "\r\n")] = '\0';
 
     for (size_t i = 0; i < sizeof(input); ++i) {
         const char letter = input[i];
@@ -160,8 +160,8 @@ int main(int argc, char** argv) {
         if (position) {
             word[position] = '\0';
         } else {
-            fprintf(
-                stderr, "[WARN] Failed to read word on line %d.\n", word_count);
+            fprintf(stderr, "[WARN] Failed to read word on line %d.\n",
+                word_count);
             continue;
         }
 
