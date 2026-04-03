@@ -6,7 +6,7 @@ Input your Scrabble tiles to generate a list of possible words. Never lose a
 game of Scrabble again!
 
 ## Project Structure
-```text
+```
 ├── .vscode                    <- Settings and configurations
 ├── bin                        <- Compiled binaries
 │   ├── debug                  <- Binaries compiled with debugging symbols
@@ -34,11 +34,11 @@ game of Scrabble again!
 
 ## Dependencies
 ### Windows
-- **Compiler:** Microsoft Visual Studio Build Tools 2022 (MSVC)
-- **Build System:** `msbuild`
+- **Compiler:** Microsoft Visual Studio
+- **Build System:** msbuild
 ### Linux
-- **Compiler:** GCC
-- **Build System:** `make`
+- **Compiler:** gcc
+- **Build System:** make
 
 ## How to Build
 ### VS Code
