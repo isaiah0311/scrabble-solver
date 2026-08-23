@@ -2,7 +2,7 @@
  * \file main.c
  * \author Isaiah Lateer
  *
- * Entry point for the project.
+ * A utility designed to help players in a game of Scrabble.
  */
 
 #include <stdbool.h>
@@ -136,8 +136,10 @@ int word_to_points(const char* word) {
 int main(int argc, char** argv) {
     if (argc < 2) {
         fprintf(stderr, "[ERROR] Did not specify a dictionary file.\n");
+        return EXIT_FAILURE;
     } else if (argc > 2) {
         fprintf(stderr, "[ERROR] Too many arguments were found.\n");
+        return EXIT_FAILURE;
     }
 
     int letters[27] = { 0 };
